@@ -8,6 +8,9 @@ const controls = ingredientConstants.ALL_INGREDIENTS.map(type => {
 })
 
 const buildControls = (props) => {
+
+  
+
   return (
 
     <div className={classes.BuildControls}>
@@ -25,6 +28,8 @@ const buildControls = (props) => {
           disabled={props.disabledInfo[ctrl.type]}
         />
       })}
+
+      <button className={classes.OrderButton} disabled={!props.canOrder} onClick={props.purchase}>Order</button>
     </div>
   )
 }

@@ -11,7 +11,6 @@ const burger = (props) => {
             return acc.concat(x.convert())
         }, []).map((type, index) => <BurgerIngredient type={type} key={type + index} />)
 
-    console.log(preparedIngredients);
 
     if(preparedIngredients.length === 0){
         preparedIngredients = <p>Please start adding ingredients</p>

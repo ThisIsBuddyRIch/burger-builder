@@ -8,10 +8,17 @@ class BurgerIngredientModel {
         this.amount = amount;
     }
 
-    convert(){
-        if(this.amount > 0 && this.type) {
-            return Array(this.amount).fill(this.type);
+    add = () => {
+        return new BurgerIngredientModel(this.type, this.amount+1);
+    }
+
+    remove = () => {
+        if(this.amount > 0){
+            return new BurgerIngredientModel(this.type, this.amount-1);
         }
+    }
+    convert(){
+        return Array(this.amount).fill(this.type);
     }
 
 }

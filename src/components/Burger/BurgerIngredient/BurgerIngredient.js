@@ -1,5 +1,5 @@
 import React from 'react'
-import * as ingredientTypes from "./BurgrerIngredientTypes"
+import * as ingredientConstants from "./BurgrerIngredientTypes"
 import classes from "./BurgerIngredient.css"
 import PropTypes from "prop-types";
 
@@ -9,10 +9,10 @@ const burgerIngredient = (props) => {
 
     switch (props.type) {
 
-        case ingredientTypes.BREAD_BOTTOM:
+        case ingredientConstants.BREAD_BOTTOM:
             ingredient = <div className={classes.BreadBottom}></div>
             break;
-        case ingredientTypes.BREAD_TOP:
+        case ingredientConstants.BREAD_TOP:
             ingredient = (
                 <div className={classes.BreadTop}>
                     <div className={classes.Seeds1}></div>
@@ -20,17 +20,17 @@ const burgerIngredient = (props) => {
                 </div>
             )
             break;
-        case ingredientTypes.MEAT:
+        case ingredientConstants.MEAT:
             ingredient = <div className={classes.Meat}></div>
             break;
 
-        case ingredientTypes.CHEESE:
+        case ingredientConstants.CHEESE:
             ingredient = <div className={classes.Cheese}></div>
             break;
-        case ingredientTypes.BACON:
+        case ingredientConstants.BACON:
             ingredient = <div className={classes.Bacon}></div>
             break;
-        case ingredientTypes.SALAD:
+        case ingredientConstants.SALAD:
             ingredient = <div className={classes.Salad}></div>
             break;
     }

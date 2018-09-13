@@ -3,15 +3,18 @@ import classes from "./Burger.css"
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient"
 import * as burgerTypes from "./BurgerIngredient/BurgrerIngredientTypes.js"
 
+
 const burger = (props) => {
-  return (
-    <div className={classes.Burger}>
-        <BurgerIngredient type={burgerTypes.BREAD_TOP} />
-        <BurgerIngredient type={burgerTypes.CHEESE} />
-        <BurgerIngredient type={burgerTypes.MEAT} />
-        <BurgerIngredient type={burgerTypes.BREAD_BOTTOM} />
-    </div>
-  )
+
+    const preparedIngredients = props.ingredients.reduce((acc, x) => {
+        return acc.concat(x.convert())
+    }, []).map((type, index) => <BurgerIngredient type={type} key={type + index} />)
+
+    return (
+        <div className={classes.Burger}>
+            {preparedIngredients}
+        </div>
+    )
 }
 
 export default burger

@@ -1,20 +1,30 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, Component } from 'react'
 import classes from "./Modal.css"
 import Backdrop from "../Backdrop/Backdrop"
 
-const modal = (props) => {
+class Modal extends Component {
 
-    let modalClass = props.isShow ? classes.show : classes.hidden;
-    modalClass += " " + classes.Modal
-    return (
-        <Fragment>
-            <Backdrop isShow={props.isShow} click={props.closeModal} />
-            <div className={modalClass}  >
-                {props.children}
-            </div>
-        </Fragment>
+    shouldComponentUpdate(nextProps, nextState) {
+        
+        //console.log(nextProps)
+        return nextProps.isShow !== this.props.isShow;
+    }
 
-    )
+    render() {
+        let modalClasses = [classes.Modal]
+        this.props.isShow ? modalClasses.push(classes.show) : modalClasses.push(classes.hidden);
+        console.log(modalClasses)
+        return (
+            <Fragment>
+                <Backdrop isShow={this.props.isShow} click={this.props.closeModal} />
+                <div className={modalClasses.join(" ")}  >
+                    {this.props.children}
+                </div>
+            </Fragment>
+
+        )
+    }
+
 }
 
-export default modal
+export default Modal

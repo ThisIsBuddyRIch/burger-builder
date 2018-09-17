@@ -7,7 +7,6 @@ export const BTN_TYPES = {
 }
 
 const button = (props) => {
-    console.log(props);
   return (
         <button className={[classes.Button, classes[props.btnType]].join(' ')} onClick={props.click} >
             {props.children}

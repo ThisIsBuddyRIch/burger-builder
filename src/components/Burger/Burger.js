@@ -5,22 +5,22 @@ import * as burgerTypes from "./BurgerIngredient/BurgrerIngredientTypes.js"
 
 const burger = (props) => {
 
-  
-   
+
+
     let preparedIngredients = props.ingredients.reduce((acc, x) => {
-            return acc.concat(x.convert())
-        }, []).map((type, index) => <BurgerIngredient type={type} key={type + index} />)
+        return acc.concat(x.convert())
+    }, []).map((type, index) => <BurgerIngredient type={type} key={type + index} />)
 
 
-    if(preparedIngredients.length === 0){
+    if (preparedIngredients.length === 0) {
         preparedIngredients = <p>Please start adding ingredients</p>
     }
 
     return (
         <div className={classes.Burger}>
-        <BurgerIngredient type={burgerTypes.BREAD_TOP} />
+            <BurgerIngredient type={burgerTypes.BREAD_TOP} />
             {preparedIngredients}
-        <BurgerIngredient type={burgerTypes.BREAD_BOTTOM} />
+            <BurgerIngredient type={burgerTypes.BREAD_BOTTOM} />
         </div>
     )
 }

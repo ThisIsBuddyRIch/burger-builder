@@ -42,6 +42,9 @@
     box-shadow: inset -1px 2px #c9c9c9;
   }
   
+
+
+
 .Seeds1:before {
     content: "";
     width: 100%;
@@ -54,6 +57,12 @@
     transform: rotate(60deg);
     box-shadow: inset -1px -3px #c9c9c9;
   }
+
+  @media (min-width:300px) and (max-width:500px){
+    .Seeds1::before {
+        top:180%;
+    }
+}
 
   .Seeds2 {
     width: 10%;

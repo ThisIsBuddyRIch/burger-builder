@@ -1,6 +1,6 @@
 
 class BurgerIngredientModel {
-    type = "";
+    type = 0;
     amount = 0
 
     constructor(type, amount){

@@ -1,11 +1,11 @@
 
 
-export const BREAD_TOP = "bread-top"
-export const BREAD_BOTTOM = "bread-bottom"
-export const MEAT = "meat"
-export const CHEESE = "cheese"
-export const BACON = "bacon"
-export const SALAD = "salad"
+export const BREAD_TOP = -1
+export const BREAD_BOTTOM = -2
+export const MEAT = 1
+export const CHEESE = 2
+export const BACON = 3
+export const SALAD = 4
 
 export const ALL_INGREDIENTS = [ MEAT, CHEESE, BACON, SALAD ]
 

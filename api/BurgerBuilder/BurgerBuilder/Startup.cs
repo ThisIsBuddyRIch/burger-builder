@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using BurgerBuilder.Infrastracture;
-using BurgerBuilder.Persistense;
+using BurgerBuilder.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

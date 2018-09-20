@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using BurgerBuilder.Domain;
 
-namespace BurgerBuilder.Persistense
+namespace BurgerBuilder.Persistence
 {
     public interface IBurgerOrderRepository
     {

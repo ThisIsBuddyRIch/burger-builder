@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BurgerBuilder.ApiModel;
 using BurgerBuilder.Domain;
-using BurgerBuilder.Persistense;
+using BurgerBuilder.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Text;

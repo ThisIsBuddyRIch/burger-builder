@@ -20,7 +20,7 @@ namespace BurgerBuilder.Persistence
 
         public async Task AddOrder(BurgerOrder order)
         {
-            await _burgerOrderCollection .InsertOneAsync(order);
+            await _burgerOrderCollection.InsertOneAsync(order);
         }
 
         public async Task<List<BurgerOrder>> GetAllOrders()

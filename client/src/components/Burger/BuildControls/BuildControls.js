@@ -8,9 +8,6 @@ const controls = ingredientConstants.ALL_INGREDIENTS.map(type => {
 })
 
 const buildControls = (props) => {
-
-  
-
   return (
 
     <div className={classes.BuildControls}>

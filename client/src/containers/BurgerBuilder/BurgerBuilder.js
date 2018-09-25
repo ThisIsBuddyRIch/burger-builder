@@ -7,29 +7,31 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls"
 import Modal from "../../components/UI/Modal/Modal"
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary"
 import axios from "../../infrastructure/axios-order"
-import Spinner from "../../components/UI/Spinner/Spinner"
+import Spinner from "../../hoc/withSpinner/withSpinner"
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler"
+import { connect } from "react-redux";
+import * as actions from "../../store/actions"
 
 export class BurgerBuilder extends Component {
   static propTypes = {
 
   }
   state = {
-    ingredients: ingredientConstants.ALL_INGREDIENTS.map(type => new BurgerIngredientModel(type, 0)),
-    price: 4,
+    // ingredients: ingredientConstants.ALL_INGREDIENTS.map(type => new BurgerIngredientModel(type, 0)),
+    // price: 4,
     purchase: false,
     isFetching: false
   }
 
   componentDidMount() {
-   this.fetchIngredients();
+    //this.fetchIngredients();
   }
 
-  toggleFetching(state){
-    this.setState({isFetching:state})
+  toggleFetching(state) {
+    this.setState({ isFetching: state })
   }
 
-  fetchIngredients(){
+  fetchIngredients() {
     this.toggleFetching(true);
 
     axios.get("/api/Ingredient/GetIngredients").then(x => {
@@ -41,37 +43,9 @@ export class BurgerBuilder extends Component {
     }).catch(err => this.toggleFetching(false));
   }
 
-  addIngredientHandler = (type) => {
-    let newIngredinets = this.state.ingredients.map(x => {
-      if (x.type === type) {
-        return x.add();
-      }
-      return x;
-    })
-    let newPrice = this.state.price + ingredientConstants.INGREDIENT_PRICE[type]
-    this.setState({
-      ingredients: newIngredinets,
-      price: newPrice
-    })
-  }
-
-  removeIngredientHandler = (type) => {
-    let newIngredinets = this.state.ingredients.map(x => {
-      if (x.type === type) {
-        return x.remove();
-      }
-      return x;
-    })
-
-    let newPrice = this.state.price - ingredientConstants.INGREDIENT_PRICE[type]
-    this.setState({
-      ingredients: newIngredinets,
-      price: newPrice
-    })
-  }
 
   checkCanOrder() {
-    return this.state.ingredients.some(x => x.amount > 0);
+    return this.props.ingredients.some(x => x.amount > 0);
   }
 
   purchase = () => {
@@ -85,54 +59,55 @@ export class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.toggleFetching(false);
+    const serializedIngredients = this.props.ingredients.map(x => {
+      return {
+        type: x.type,
+        amount: x.amount
+      }
+    });
 
-    axios.post("/api/BurgerOrder/CreateBurgerOrder", {
-      customerApiModel: {
-        address: {
-          street: "Nevsky",
-          zipCode: "455000",
-          country: "Russia"
-        },
-        name: "Kirill",
-        email: "test@mail.ru"
-      },
-      ingredients: this.state.ingredients.filter(item => item.amount > 0),
-      deliveryMethod: "fast"
-    }).then(x => this.setState({ isFetching: false, purchase: false }))
-      .catch(x => this.setState({ isFetchingP: false, purchase: false }))
+    this.props.history.push({
+      pathname: "/checkout",
+      state: serializedIngredients
+    })
   }
+
+
+
 
 
   _getModalInner() {
-    let result = null;
-
-    if (this.state.isFetching) {
-      result = <Spinner />
-    } else {
-      result = <OrderSummary ingredients={this.state.ingredients}
-        cancel={this.purchaseCancelHandler}
-        continue={this.purchaseContinueHandler}
-      />;
-    }
-    return result;
+    return (
+      <Spinner isFetching={this.state.isFetching}>
+        <OrderSummary ingredients={this.props.ingredients}
+          cancel={this.purchaseCancelHandler}
+          continue={this.purchaseContinueHandler} />
+      </Spinner>
+    );
   }
 
-  _getBurger(){
-    let result = null;
+  _getBurger() {
+    // let result = null;
 
-    if(this.state.isFetching){
-      result = <Spinner />
-    } else {
-      result =  <Burger ingredients={this.state.ingredients} />
-    }
-    return result;
+    // if (this.state.isFetching) {
+    //   result = <Spinner />
+    // } else {
+    //   result = 
+    // }
+    // return result;
+
+    return (
+      <Spinner isFetching={this.state.isFetching}>
+        <Burger ingredients={this.props.ingredients} />
+      </Spinner>
+    )
+
   }
 
   render() {
 
     let disabledInfo = {};
-    this.state.ingredients.forEach(x => {
+    this.props.ingredients.forEach(x => {
       disabledInfo[x.type] = x.amount <= 0
     })
 
@@ -148,10 +123,10 @@ export class BurgerBuilder extends Component {
         </Modal>
         {burger}
         <BuildControls
-          more={this.addIngredientHandler}
-          less={this.removeIngredientHandler}
+          more={this.props.addIngredient}
+          less={this.props.removeIngredient}
           disabledInfo={disabledInfo}
-          price={this.state.price}
+          price={this.props.price}
           canOrder={canOrder}
           purchase={this.purchase}
         />
@@ -160,4 +135,21 @@ export class BurgerBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgerBuilder, axios)
+
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    ingredients: state.ingredients,
+    price: state.price
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addIngredient: (typeIngr) => dispatch({ type: actions.ADD_INGREDIENT, payload: {type: typeIngr}}),
+    removeIngredient: (typeIngr) => dispatch({type: actions.REMOVE_INGREDIENT, payload: { type: typeIngr}})
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios))

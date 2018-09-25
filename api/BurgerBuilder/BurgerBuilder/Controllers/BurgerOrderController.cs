@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -18,7 +19,8 @@ namespace BurgerBuilder.Controllers
     public class BurgerOrderController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IBurgerOrderRepository _burgerRepository;
+        private readonly IBurgerOrderRepository _burgerRepository;    
+
 
         public BurgerOrderController(IMapper mapper, IBurgerOrderRepository burgerRepository)
         {
@@ -38,18 +40,22 @@ namespace BurgerBuilder.Controllers
 
             domainObject.CalculatePrice();
 
+            await Task.Delay(2000);
+            
             await _burgerRepository.AddOrder(domainObject);
 
             return Ok();
         }
+        
+        
 
         [HttpGet]
         public async Task<ActionResult<List<BurgerOrder>>> GetAllOrders()
         {
+            await Task.Delay(2000);
             return await _burgerRepository.GetAllOrders();
+            
+            
         }
-
     }
-
-
 }

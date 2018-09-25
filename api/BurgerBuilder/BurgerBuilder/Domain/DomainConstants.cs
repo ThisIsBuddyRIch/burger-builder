@@ -12,8 +12,4 @@ namespace BurgerBuilder.Domain
             { IngredientType.Salad, 0.5m }
         };
     }
-
-
-
-
 }

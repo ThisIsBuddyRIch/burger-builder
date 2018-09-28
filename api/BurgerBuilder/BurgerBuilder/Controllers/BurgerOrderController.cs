@@ -54,8 +54,6 @@ namespace BurgerBuilder.Controllers
         {
             await Task.Delay(2000);
             return await _burgerRepository.GetAllOrders();
-            
-            
         }
     }
 }

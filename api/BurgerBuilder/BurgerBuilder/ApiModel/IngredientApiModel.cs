@@ -18,6 +18,7 @@ namespace BurgerBuilder.ApiModel
                 .Select(x => new IngredientApiModel
                 {
                     Type = x,
+                    Amount = 1
                 }).ToList();
         }
     }

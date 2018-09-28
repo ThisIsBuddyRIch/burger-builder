@@ -10,39 +10,21 @@ import axios from "../../infrastructure/axios-order"
 import Spinner from "../../hoc/withSpinner/withSpinner"
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler"
 import { connect } from "react-redux";
-import * as actions from "../../store/actions"
+import { addIngredient, removeIngredient, fetchIngredients } from "../../store/actionCreators/burgerActionCreators"
+import { CHECKOUT } from "../../router/routs"
 
 export class BurgerBuilder extends Component {
   static propTypes = {
 
   }
   state = {
-    // ingredients: ingredientConstants.ALL_INGREDIENTS.map(type => new BurgerIngredientModel(type, 0)),
-    // price: 4,
+
     purchase: false,
-    isFetching: false
   }
 
   componentDidMount() {
-    //this.fetchIngredients();
+    this.props.fetchIngredients();
   }
-
-  toggleFetching(state) {
-    this.setState({ isFetching: state })
-  }
-
-  fetchIngredients() {
-    this.toggleFetching(true);
-
-    axios.get("/api/Ingredient/GetIngredients").then(x => {
-      const ingredients = x.data.map(x => {
-        return new BurgerIngredientModel(x.type, x.amount);
-      })
-      this.setState({ ingredients: ingredients });
-      this.toggleFetching(false);
-    }).catch(err => this.toggleFetching(false));
-  }
-
 
   checkCanOrder() {
     return this.props.ingredients.some(x => x.amount > 0);
@@ -67,7 +49,7 @@ export class BurgerBuilder extends Component {
     });
 
     this.props.history.push({
-      pathname: "/checkout",
+      pathname: CHECKOUT,
       state: serializedIngredients
     })
   }
@@ -78,7 +60,7 @@ export class BurgerBuilder extends Component {
 
   _getModalInner() {
     return (
-      <Spinner isFetching={this.state.isFetching}>
+      <Spinner isFetching={this.props.isFetching}>
         <OrderSummary ingredients={this.props.ingredients}
           cancel={this.purchaseCancelHandler}
           continue={this.purchaseContinueHandler} />
@@ -87,17 +69,9 @@ export class BurgerBuilder extends Component {
   }
 
   _getBurger() {
-    // let result = null;
-
-    // if (this.state.isFetching) {
-    //   result = <Spinner />
-    // } else {
-    //   result = 
-    // }
-    // return result;
 
     return (
-      <Spinner isFetching={this.state.isFetching}>
+      <Spinner isFetching={this.props.isFetching}>
         <Burger ingredients={this.props.ingredients} />
       </Spinner>
     )
@@ -139,15 +113,19 @@ export class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    ingredients: state.ingredients,
-    price: state.price
+    ingredients: state.burger.ingredients,
+    price: state.burger.price,
+    isFetching: state.burger.isFetching
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addIngredient: (typeIngr) => dispatch({ type: actions.ADD_INGREDIENT, payload: {type: typeIngr}}),
-    removeIngredient: (typeIngr) => dispatch({type: actions.REMOVE_INGREDIENT, payload: { type: typeIngr}})
+    //addIngredient: (typeIngr) => dispatch({ type: actions.ADD_INGREDIENT, payload: {type: typeIngr}}),
+    //removeIngredient: (typeIngr) => dispatch({type: actions.REMOVE_INGREDIENT, payload: { type: typeIngr}})
+    addIngredient: (ingredientType) => dispatch(addIngredient(ingredientType)),
+    removeIngredient: (ingredientType) => dispatch(removeIngredient(ingredientType)),
+    fetchIngredients: () => dispatch(fetchIngredients())
   }
 }
 

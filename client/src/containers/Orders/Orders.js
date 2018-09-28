@@ -3,6 +3,8 @@ import Order from "../../components/Order/Order"
 import axios from "../../infrastructure/axios-order"
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler"
 import Spinner from "../../hoc/withSpinner/withSpinner"
+import { connect } from "react-redux";
+import { fetchOrders } from "../../store/actionCreators/orderActionCreators"
 
 class Orders extends Component {
     state = {
@@ -43,4 +45,18 @@ class Orders extends Component {
     }
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = state => {
+    return {
+        orders: state.order.orders,
+        isFetching: state.order.isFetching
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchOrders: dispatch(fetchOrders())
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
-import BurgerIngredientModel from "../../components/Burger/BurgerIngredient/BurgerIngredientModel"
-import * as burgerConstants from "../../components/Burger/BurgerIngredient/BurgrerIngredientTypes"
 import { Route, withRouter } from "react-router-dom";
 import ContactData  from './ContactData/ContactData';
 import { connect } from "react-redux";
-
+import * as routs from "../../router/routs"
 
 export class Checkout extends Component {
     onCheckOutCancel = () => {
@@ -13,12 +11,14 @@ export class Checkout extends Component {
     }
 
     onCheckOutContinue = () => {
-        this.props.history.replace("/checkout/contact-data")
+        this.props.history.replace(routs.CHECKOUT + routs.CONTACT_DATA);
     }
 
-    // afterOrderSubmit = () =>{
-    //     this.props.history.push("/")
-    // }
+    componentWillMount(){
+        if(this.props.ingredients.every(x => x.amount === 0)){
+            this.props.history.push(routs.ROOT)
+        }
+    }
 
     render() {
         return (
@@ -28,7 +28,7 @@ export class Checkout extends Component {
                     checkOutContinue={this.onCheckOutContinue}
                     ingredients={this.props.ingredients} />
 
-                <Route path={this.props.match.url + "/contact-data"} component={ContactData} />
+                <Route path={this.props.match.url + routs.CONTACT_DATA} component={ContactData} />
             </div>
         )
     }
@@ -36,7 +36,7 @@ export class Checkout extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients
+        ingredients: state.burger.ingredients
     }
 }
 

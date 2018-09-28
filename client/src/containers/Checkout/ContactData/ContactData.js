@@ -107,7 +107,7 @@ export class ContactData extends Component {
 const mapStateToProps = state => {
     console.log("conndata", state);
     return {
-        ingredients: state.ingredients,
+        ingredients: state.burger.ingredients,
     }
 }
 

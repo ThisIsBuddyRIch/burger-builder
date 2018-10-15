@@ -1,0 +1,21 @@
+.Auth {
+    box-sizing: border-box;
+    margin: auto;
+    width: 30%;
+    margin-top: 200px;
+}
+.BtnWrapper {
+    text-align: center;
+}
+
+.ErrorAuth{
+    color: red;
+    text-align: center;
+}
+
+@media (max-width:500px){
+    .Auth{
+        margin-top:100px;
+        width: 80%;
+    }
+}

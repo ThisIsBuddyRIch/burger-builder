@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using BurgerBuilder.ApiModel;
 using BurgerBuilder.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BurgerBuilder.Infrastracture
+namespace BurgerBuilder.Infrastructure
 {
     public class MapperProfile : Profile
     {

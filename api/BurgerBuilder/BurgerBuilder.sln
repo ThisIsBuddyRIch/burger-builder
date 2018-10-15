@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerBuilder", "BurgerBuilder\BurgerBuilder.csproj", "{34CF21CF-4322-4E1E-B646-EBB638E7DDE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAll", "TestAll\TestAll.csproj", "{E0D80957-D119-4EB9-AEB9-2EE255C17B18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{34CF21CF-4322-4E1E-B646-EBB638E7DDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34CF21CF-4322-4E1E-B646-EBB638E7DDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34CF21CF-4322-4E1E-B646-EBB638E7DDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D80957-D119-4EB9-AEB9-2EE255C17B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D80957-D119-4EB9-AEB9-2EE255C17B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D80957-D119-4EB9-AEB9-2EE255C17B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D80957-D119-4EB9-AEB9-2EE255C17B18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

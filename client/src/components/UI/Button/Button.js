@@ -8,7 +8,7 @@ export const BTN_TYPES = {
 
 const button = (props) => {
   return (
-        <button className={[classes.Button, classes[props.btnType]].join(' ')} onClick={props.click} >
+        <button className={[classes.Button, classes[props.btnType], props.classes].join(' ')} onClick={props.click} >
             {props.children}
         </button>
   )

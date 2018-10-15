@@ -4,8 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
-using BurgerBuilder.Infrastracture;
+using BurgerBuilder.Infrastructure;
+using BurgerBuilder.Infrastructure.Consul;
 using BurgerBuilder.Persistence;
+using Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,15 +33,22 @@ namespace BurgerBuilder
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<Settings>(options => {
-                options.MongoConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.MongoDbName = Configuration.GetSection("MongoConnection:Database").Value;
+                options.ApiKey = Configuration.GetSection("ApiKey").Value;
             });
 
+            services.Configure<MongoSettings>(Configuration.GetSection("MongoInfo"));         
+ 
+            
             services.AddScoped<MongoDbContext>();
             services.AddScoped<IBurgerOrderRepository, BurgerOrderRepository>();
+            services.AddScoped<IConsulProvider, ConsulProvider>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.AddSecurityDefinition("ApiKey", new ApiKeyScheme { In = "header", Description = "Api", Name = Constants.SecretHeader, Type = "apiKey" });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                    { "ApiKey", Enumerable.Empty<string>() }
+                });
             });
 
             services.AddCors();
